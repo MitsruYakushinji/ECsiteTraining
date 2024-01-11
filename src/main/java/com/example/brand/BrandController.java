@@ -35,6 +35,8 @@ public class BrandController {
     public String listBrands(@RequestParam(required = false) String keyword, Model model) {
         // 全ブランド情報の取得
         List<Brand> listBrands = brandService.listAll(keyword);
+        
+        // 取得したブランド情報を画面に渡す
         model.addAttribute("listBrands", listBrands);
         model.addAttribute("keyword", keyword);
         return "brands/brands";
