@@ -15,15 +15,19 @@ public class CategoryService {
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
+    
     /**
      * カテゴリー情報全件取得
+     * 
      * @return カテゴリー情報のリスト
      */
     public List<Category> listAll(){
 		return categoryRepository.findAll();
     }
+    
     /**
      * カテゴリー情報検索処理
+     * 
      * @param keyword 検索キーワード
      * @return カテゴリ情報のリスト
      */
@@ -36,5 +40,15 @@ public class CategoryService {
     	else {
     		return categoryRepository.findAll();
     	}
+    }
+    
+    /**
+     * カテゴリー情報登録処理
+     * 
+     * @param category 保存したいカテゴリー情報
+     * @return 保存したカテゴリー情報
+     */
+    public Category save(Category category) {
+    	return categoryRepository.save(category);
     }
 }
