@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +53,7 @@ public class CategoryController {
 		// 新規登録用の、空のカテゴリー情報
 		Category category = new Category();
 		model.addAttribute("category", category);
-		return "category/category_form";
+		return "categories/category_form";
 	}
 	
 	/**
@@ -67,10 +68,48 @@ public class CategoryController {
 		// カテゴリー情報の登録
 		categoryService.save(category);
 		// 登録成功のメッセージを格納
-		ra.addFlashAttribute("success", "登録に成功しました");
-		return "redirect/categories";
+		ra.addFlashAttribute("success_message", "登録に成功しました");
+		return "redirect:/categories";
 	}
 	
+	/**
+	 * カテゴリー詳細情報
+	 * 
+	 * @param id カテゴリーID
+	 * @param model
+	 * @return カテゴリー詳細画面
+	 */
+	@GetMapping("/detail/{id}")
+	public String detailCategory(@PathVariable(name = "id") Long id, Model model) {
+		// カテゴリーIDに紐づくカテゴリー情報取得
+		Category category = categoryService.get(id);
+		model.addAttribute("category", category);
+		return "categories/category_detail";
+	}
+	
+	/**
+	 * カテゴリー編集画面表示
+	 * 
+	 * @param id カテゴリーID
+	 * @param model
+	 * @return カテゴリ編集画面
+	 */
+	@GetMapping("/edit/{id}")
+	public String editCategory(@PathVariable(name = "id") Long id, Model model) {
+		// カテゴリーIDに紐づくカテゴリー情報取得
+		Category category = categoryService.get(id);
+		model.addAttribute("category", category);
+		return "categories/category_edit";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String deleteCategory(@PathVariable(name = "id") Long id, Model model, RedirectAttributes ra) {
+		// ブランド情報削除
+		categoryService.delete(id);
+		// 削除成功のメッセージを格納
+		ra.addFlashAttribute("success_message", "削除に成功しました");
+		return "redirect:/categories";
+	}
 }
 
 

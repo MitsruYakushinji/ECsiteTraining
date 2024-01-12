@@ -43,6 +43,16 @@ public class CategoryService {
     }
     
     /**
+     * IDに紐づくカテゴリー情報取得処理
+     * 
+     * @param id カテゴリーID
+     * @return カテゴリー情報
+     */
+    public Category get(Long id) {
+    	return categoryRepository.findById(id).get();
+    }
+    
+    /**
      * カテゴリー情報登録処理
      * 
      * @param category 保存したいカテゴリー情報
@@ -50,5 +60,14 @@ public class CategoryService {
      */
     public Category save(Category category) {
     	return categoryRepository.save(category);
+    }
+    
+    /**
+     * IDに紐づくカテゴリー情報削除処理
+     * 
+     * @param id カテゴリーID
+     */
+    public void delete(Long id) {
+    	categoryRepository.deleteById(id);
     }
 }
